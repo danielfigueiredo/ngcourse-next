@@ -1,7 +1,8 @@
 <div>
-    <span>
-      Hello, {{ ctrl.username }}!
-      You've got {{ ctrl.numberOfTasks }} tasks.
-      <button ng-click="ctrl.addTask()">Add task</button>
-    </span>
+  <div ng-hide="ctrl.isAuthenticated">
+    <ngc-login-form on-submit="ctrl.login(data)"></ngc-login-form>
+  </div>
+  <div ng-show="ctrl.isAuthenticated">
+    <ngc-tasks username="ctrl.username"></ngc-tasks>
+  </div>
 </div>
