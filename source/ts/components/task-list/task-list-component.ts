@@ -1,4 +1,5 @@
 import {Inject} from '../../utils/di';
+import {TasksService} from '../../services/tasks/tasks-service';
 
 export class TaskListComponent {
   private numberOfTasks;
@@ -14,18 +15,15 @@ export class TaskListComponent {
 
   constructor(
     @Inject('$log') private $log,
-    @Inject('$http') private $http: ng.IHttpService
+    @Inject('tasksService') private tasksService: TasksService
     ) {
-      
-    this.$http.get('http://ngcourse.herokuapp.com/api/v1/tasks')
-      .then(response => {
-        this.$log.info(response.data);
-        this.tasks = response.data;
-      })
-      .then(null, 
-        error => this.$log.error(status, error));
+    this.getTasks();
   }
-
+  
+  public getTasks() {
+    this.tasksService.getTasks()
+      .then(tasks => this.tasks = tasks);
+  }
   public addTask() {
     // this.$log.debug('Current number of tasks:', this.tasks.length);
   }

@@ -18,6 +18,9 @@
     "source/ts/components/login-form/login-form-component.ts",
     "source/ts/components/task/task-component.ts",
     
+    "source/ts/services/tasks/tasks-service.ts",
+    "source/ts/services/server/server-service.ts",
+    
     "source/ts/utils/component-utils.ts",
     "source/ts/utils/di.ts",
     "source/ts/utils/store-utils.ts",
@@ -25,7 +28,8 @@
     
     "source/ts/entry.test.ts",
     "source/ts/simple.test.ts",
-    "source/ts/components/task/task-component.test.ts"
+    "source/ts/components/task/task-component.test.ts",
+    "source/ts/services/tasks/tasks-service.test.ts"
     
   ]
 }
