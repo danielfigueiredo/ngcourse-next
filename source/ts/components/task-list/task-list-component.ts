@@ -1,5 +1,7 @@
 import {Inject} from '../../utils/di';
 import {TasksService} from '../../services/tasks/tasks-service';
+import {TasksStore} from '../../stores/tasks/tasks-store';
+import {TaskActions} from '../../actions/tasks/task-actions';
 
 export class TaskListComponent {
   private numberOfTasks;
@@ -11,18 +13,30 @@ export class TaskListComponent {
     }
   };
 
-  private tasks;
+  private _tasks;
+  private _errorMessage;
 
   constructor(
-    @Inject('$log') private $log,
-    @Inject('tasksService') private tasksService: TasksService
+    @Inject('$scope') 
+      private $scope,
+    @Inject('tasksStore')
+      private tasksStore: TasksStore,
+    @Inject('taskActions') private taskActions: TaskActions
     ) {
-    this.getTasks();
+      
+    let tasksSubjectDisposable = this.tasksStore.tasksSubject.subscribe(
+      tasks => this._tasks = tasks,
+      error => this._errorMessage = error);
+      
+    this.$scope.$on('$destroy', () => tasksSubjectDisposable.dispose());
   }
   
-  public getTasks() {
-    this.tasksService.getTasks()
-      .then(tasks => this.tasks = tasks);
+  get tasks() {
+    return this._tasks;
+  }
+  
+  public emitGetTasksAction() {
+    this.taskActions.getTasks();
   }
   public addTask() {
     // this.$log.debug('Current number of tasks:', this.tasks.length);

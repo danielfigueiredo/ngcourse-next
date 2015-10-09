@@ -3,6 +3,7 @@
     <ngc-login-form on-submit="ctrl.login(data)"></ngc-login-form>
   </div>
   <div ng-show="ctrl.isAuthenticated">
+    <ngc-task-add></ngc-task-add>
     <ngc-tasks username="ctrl.username"></ngc-tasks>
   </div>
 </div>

@@ -7,7 +7,12 @@ export class MainComponent {
   private isAuthenticated;
   private username;
 
-  constructor( @Inject('$log') private $log) {
+  constructor(
+    @Inject('$log')
+    private $log,
+    @Inject('$http')
+    private $http) {
+
     this.isAuthenticated = false;
   }
 

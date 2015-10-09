@@ -13,13 +13,20 @@
     "source/typings/tsd.d.ts",
     
     "source/ts/app.ts",
+    
+    "source/ts/actions/action-constants.ts",
+    "source/ts/actions/tasks/task-actions.ts",
+    
     "source/ts/components/main/main-component.ts",
     "source/ts/components/task-list/task-list-component.ts",
+    "source/ts/components/task-add/task-add-component.ts",
     "source/ts/components/login-form/login-form-component.ts",
     "source/ts/components/task/task-component.ts",
     
     "source/ts/services/tasks/tasks-service.ts",
     "source/ts/services/server/server-service.ts",
+    
+    "source/ts/stores/tasks/tasks-store.ts",
     
     "source/ts/utils/component-utils.ts",
     "source/ts/utils/di.ts",
