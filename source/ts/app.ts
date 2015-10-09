@@ -1,5 +1,6 @@
 import 'angular';
 import './template-cache';
+import 'angular-ui-router';
 
 import * as Rx from 'rx.all';
 
@@ -13,7 +14,11 @@ import {TasksService} from './services/tasks/tasks-service';
 import {ServerService} from './services/server/server-service';
 import {TasksStore} from './stores/tasks/tasks-store';
 import {TaskActions} from './actions/tasks/task-actions';
+import {RouterConfig} from './services/router/router-service';
 
+angular.module('ngcourse.router', ['ui.router'])
+  .config(RouterConfig);
+  
 angular.module('ngcourse.server', [])
   .constant('API_BASE_URL', 'http://ngcourse.herokuapp.com')
   .service('serverService', ServerService);
@@ -29,7 +34,8 @@ angular.module('ngcourse', [
     'ngcourse.templates', 
     'ngcourse.server', 
     'ngcourse.dispatcher',
-    'ngcourse.tasks'
+    'ngcourse.tasks',
+    'ngcourse.router'
   ])
   .service('tasksService', TasksService)
   .directive(

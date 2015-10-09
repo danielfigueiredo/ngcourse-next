@@ -14,30 +14,48 @@ export class TaskListComponent {
   };
 
   private _tasks;
-  private _errorMessage;
+  private _errorMessage: string;
 
   constructor(
     @Inject('$scope') 
       private $scope,
     @Inject('tasksStore')
       private tasksStore: TasksStore,
-    @Inject('taskActions') private taskActions: TaskActions
+    @Inject('taskActions') 
+      private taskActions: TaskActions
     ) {
-      
+    
+    this.taskActions.getTasks();
+    
     let tasksSubjectDisposable = this.tasksStore.tasksSubject.subscribe(
-      tasks => this._tasks = tasks,
-      error => this._errorMessage = error);
+      tasks => this._tasks = tasks);
       
-    this.$scope.$on('$destroy', () => tasksSubjectDisposable.dispose());
+     let tasksSubjectDisposableError = 
+        this.tasksStore.tasksSubjectError.subscribe(
+          error => {
+            if (confirm('Do you want to retry getting the tasks?' + error)) {
+              this.taskActions.getTasks();
+            }
+          });  
+      
+    this.$scope.$on('$destroy', () => {
+      tasksSubjectDisposableError.dispose();
+      tasksSubjectDisposable.dispose();
+    });
+  }
+  
+  emitGetTasksAction() {
+    this.taskActions.getTasks();
   }
   
   get tasks() {
     return this._tasks;
   }
   
-  public emitGetTasksAction() {
-    this.taskActions.getTasks();
+  get errorMessage() {
+    return this._errorMessage;
   }
+
   public addTask() {
     // this.$log.debug('Current number of tasks:', this.tasks.length);
   }

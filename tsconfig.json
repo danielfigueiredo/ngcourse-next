@@ -25,6 +25,7 @@
     
     "source/ts/services/tasks/tasks-service.ts",
     "source/ts/services/server/server-service.ts",
+    "source/ts/services/router/router-service.ts",
     
     "source/ts/stores/tasks/tasks-store.ts",
     
@@ -36,7 +37,9 @@
     "source/ts/entry.test.ts",
     "source/ts/simple.test.ts",
     "source/ts/components/task/task-component.test.ts",
-    "source/ts/services/tasks/tasks-service.test.ts"
+    "source/ts/services/tasks/tasks-service.test.ts",
+    "source/ts/components/task-list/task-list-component.test.ts",
+    "source/ts/stores/tasks/tasks-store.test.ts"
     
   ]
 }
