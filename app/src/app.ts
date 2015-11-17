@@ -9,12 +9,22 @@ import '../css/styles.css';
 import * as angular from 'angular';
 import * as Rx from 'rx';
 
-import {MainComponent} from './components/main/main-component';
+import {
+  MainComponent, 
+  TaskListComponent,
+  LoginFormComponent
+} from './components';
 
 angular.module('ngcourse', [])
   .directive(
     MainComponent.selector, 
-    MainComponent.directiveFactory);
+    MainComponent.directiveFactory)
+  .directive(
+    TaskListComponent.selector, 
+    TaskListComponent.directiveFactory)
+  .directive(
+    LoginFormComponent.selector, 
+    LoginFormComponent.directiveFactory);
 
 angular.element(document).ready(
   () => angular.bootstrap(document, ['ngcourse'])

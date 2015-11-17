@@ -1,8 +1,9 @@
 export class MainComponent {
 
+  private isAuthenticated: boolean;
   private username: string;
-  private numberOfTasks: number;
   
+  private arr = [1, 2, 4];
   static selector = 'ngcMain';
 
   static directiveFactory: ng.IDirectiveFactory = () => ({
@@ -14,15 +15,10 @@ export class MainComponent {
     bindToController: true
   });
 
-  static $inject = ['$log'];
-  
-  constructor(private $log: ng.ILogService) {
-    this.username = 'alice';
-    this.numberOfTasks = 0;
-  }
+  constructor() { }
 
-  addTask() {
-    this.$log.log('Number of Tasks: ', this.numberOfTasks);
-    this.numberOfTasks += 1;
+  login(data) {
+    this.username = data.username;
+    this.isAuthenticated = true;
   }
 }
