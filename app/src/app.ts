@@ -9,27 +9,12 @@ import '../css/styles.css';
 import * as angular from 'angular';
 import * as Rx from 'rx';
 
-class MainDirectiveCtrl {
-  
-  userDisplayName: string;
-  
-  constructor() {
-    this.userDisplayName = 'Mike Tyson';
-  }
-  
-}
+import {MainComponent} from './components/main/main-component';
 
 angular.module('ngcourse', [])
-  .directive('ngcMain', () => {
-    return {
-      restrict: 'E',
-      scope: {},
-      template: '<span>Hello, {{ ctrl.userDisplayName }}.</span>',
-      controller: MainDirectiveCtrl,
-      controllerAs: 'ctrl',
-      bindToController: true
-    };
-  });
+  .directive(
+    MainComponent.selector, 
+    MainComponent.directiveFactory);
 
 angular.element(document).ready(
   () => angular.bootstrap(document, ['ngcourse'])
