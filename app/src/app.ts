@@ -9,10 +9,14 @@ import '../css/styles.css';
 import * as angular from 'angular';
 import * as Rx from 'rx';
 
+import {toCamelCase} from './utils/utils'
+
+toCamelCase('');
 import {
   MainComponent, 
   TaskListComponent,
-  LoginFormComponent
+  LoginFormComponent,
+  TaskComponent
 } from './components';
 
 angular.module('ngcourse', [])
@@ -24,7 +28,10 @@ angular.module('ngcourse', [])
     TaskListComponent.directiveFactory)
   .directive(
     LoginFormComponent.selector, 
-    LoginFormComponent.directiveFactory);
+    LoginFormComponent.directiveFactory)
+  .directive(
+    TaskComponent.selector, 
+    TaskComponent.directiveFactory);
 
 angular.element(document).ready(
   () => angular.bootstrap(document, ['ngcourse'])

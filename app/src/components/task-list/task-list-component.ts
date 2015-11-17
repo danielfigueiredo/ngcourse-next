@@ -1,9 +1,8 @@
 export class TaskListComponent {
 
   private username: string;
-  private arr;
-  private numberOfTasks: number;
-  
+  private tasks;
+
   static selector = 'ngcTasks';
 
   static directiveFactory: ng.IDirectiveFactory = () => ({
@@ -13,21 +12,28 @@ export class TaskListComponent {
     controller: TaskListComponent,
     controllerAs: 'ctrl',
     bindToController: {
-      username: '=',
-      arr: '='
+      username: '='
     }
   });
 
   static $inject = ['$log'];
-  
+
   constructor(private $log: ng.ILogService) {
     this.username = 'alice';
-    this.numberOfTasks = 0;
-    $log.debug('Passed an array: ', this.arr);
-  }
 
-  addTask() {
-    this.$log.log('Number of Tasks: ', this.numberOfTasks);
-    this.numberOfTasks += 1;
+    this.tasks = [
+      {
+        owner: 'alice',
+        description: 'Build the dog shed.'
+      },
+      {
+        owner: 'bob',
+        description: 'Get the milk.'
+      },
+      {
+        owner: 'alice',
+        description: 'Fix the door handle.'
+      }
+    ];
   }
 }
