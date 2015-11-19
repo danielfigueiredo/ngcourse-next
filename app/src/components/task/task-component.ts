@@ -17,7 +17,7 @@ export class TaskComponent {
 
   private task;
   
-  constructor(private $log) {
-
+  constructor(private $log: ng.ILogService) {
+    // $log.debug('Task: ', this.task);
   }
 };

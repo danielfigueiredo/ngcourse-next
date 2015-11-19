@@ -1,8 +1,11 @@
+import {TasksService} from '../../services';
+
 export class TaskListComponent {
 
   private username: string;
   private tasks;
-
+  private arr;
+  
   static selector = 'ngcTasks';
 
   static directiveFactory: ng.IDirectiveFactory = () => ({
@@ -12,28 +15,19 @@ export class TaskListComponent {
     controller: TaskListComponent,
     controllerAs: 'ctrl',
     bindToController: {
-      username: '='
+      username: '=',
+      arr: '='
     }
   });
 
-  static $inject = ['$log'];
+  static $inject = ['$log', 'tasksService'];
 
-  constructor(private $log: ng.ILogService) {
-    this.username = 'alice';
+  constructor(
+    private $log: ng.ILogService, 
+    private tasksService: TasksService) {
 
-    this.tasks = [
-      {
-        owner: 'alice',
-        description: 'Build the dog shed.'
-      },
-      {
-        owner: 'bob',
-        description: 'Get the milk.'
-      },
-      {
-        owner: 'alice',
-        description: 'Fix the door handle.'
-      }
-    ];
+    tasksService.getTasks()
+      .then(tasks => this.tasks = tasks)
+      .then(null, error => $log.error);
   }
 }
