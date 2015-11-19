@@ -28,7 +28,9 @@ export class TaskListComponent {
     private tasksAction: TaskActions) {
 
     tasksStore.tasksSubject.subscribe(
-      tasks => this.tasks = tasks,
+      tasks => {
+        this.tasks = tasks;
+      },
       error => this.error = error
     );
   }

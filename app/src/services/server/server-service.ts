@@ -10,4 +10,9 @@ export class ServerService {
     return this.$http.get(this.API_BASE_URL + path)
       .then(response => response.data);
   }
+  
+  post(path, data) {
+    return this.$http.post(this.API_BASE_URL + path, data)
+      .then(response => response.data);
+  }
 }

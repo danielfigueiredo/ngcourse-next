@@ -13,7 +13,8 @@ import {
   MainComponent, 
   TaskListComponent,
   LoginFormComponent,
-  TaskComponent
+  TaskComponent,
+  TaskAddComponent
 } from './components';
 
 import {
@@ -45,7 +46,10 @@ angular.module('ngcourse.tasks', [])
     TaskListComponent.directiveFactory)
   .directive(
     TaskComponent.selector, 
-    TaskComponent.directiveFactory);
+    TaskComponent.directiveFactory)
+  .directive(
+    TaskAddComponent.selector, 
+    TaskAddComponent.directiveFactory);
     
 angular.module('ngcourse', [
   'ngcourse.dispatcher',

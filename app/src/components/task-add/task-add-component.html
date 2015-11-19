@@ -1,0 +1,19 @@
+<div>
+  <div>
+    <h4>Add Task</h4>
+  </div>
+  <form>
+    <label>Owner</label>
+    <input
+      type="text"
+      ng-model="newTask.owner"></br>
+    <label>Description</label>
+    <input
+      type="text"
+      ng-model="newTask.description">
+    <button
+      ng-click="ctrl.save(newTask)">
+      Save
+    </button>
+  </form>
+</div>
