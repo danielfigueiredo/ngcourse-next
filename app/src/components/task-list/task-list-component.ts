@@ -1,10 +1,11 @@
-import {TasksService} from '../../services';
+import {TasksStore} from '../../stores';
+import {TaskActions} from '../../actions';
 
 export class TaskListComponent {
 
   private username: string;
+  private error: string;
   private tasks;
-  private arr;
   
   static selector = 'ngcTasks';
 
@@ -15,19 +16,24 @@ export class TaskListComponent {
     controller: TaskListComponent,
     controllerAs: 'ctrl',
     bindToController: {
-      username: '=',
-      arr: '='
+      username: '='
     }
   });
 
-  static $inject = ['$log', 'tasksService'];
+  static $inject = ['$log', 'tasksStore', 'tasksAction'];
 
   constructor(
     private $log: ng.ILogService, 
-    private tasksService: TasksService) {
+    private tasksStore: TasksStore,
+    private tasksAction: TaskActions) {
 
-    tasksService.getTasks()
-      .then(tasks => this.tasks = tasks)
-      .then(null, error => $log.error);
+    tasksStore.tasksSubject.subscribe(
+      tasks => this.tasks = tasks,
+      error => this.error = error
+    );
+  }
+  
+  getTasks() {
+    this.tasksAction.getTasks();
   }
 }

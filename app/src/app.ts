@@ -21,12 +21,25 @@ import {
   ServerService
 } from './services';
 
+import {
+  TasksStore
+} from './stores';
+
+import {
+  TaskActions
+} from './actions';
+
+angular.module('ngcourse.dispatcher', [])
+  .service('dispatcher', Rx.Subject);
+    
 angular.module('ngcourse.server', [])
   .service('serverService', ServerService)
   .constant('API_BASE_URL', 'http://ngcourse.herokuapp.com');
   
 angular.module('ngcourse.tasks', [])
   .service('tasksService', TasksService)
+  .service('tasksStore', TasksStore)
+  .service('tasksAction', TaskActions)
   .directive(
     TaskListComponent.selector, 
     TaskListComponent.directiveFactory)
@@ -35,6 +48,7 @@ angular.module('ngcourse.tasks', [])
     TaskComponent.directiveFactory);
     
 angular.module('ngcourse', [
+  'ngcourse.dispatcher',
   'ngcourse.server',
   'ngcourse.tasks'
   ])
