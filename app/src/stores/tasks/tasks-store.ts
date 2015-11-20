@@ -5,9 +5,8 @@ import {List, fromJS} from 'immutable';
 
 export class TasksStore {
 
-  private _tasks: List<any>;
   tasks: Rx.ReplaySubject<any>;
-  error: Rx.ReplaySubject<any>
+  error: Rx.ReplaySubject<any>;
 
   static $inject = [
     '$log',
@@ -21,7 +20,6 @@ export class TasksStore {
     private dispatcher: Rx.Subject<any>
   ) {
 
-    this._tasks = List<any>();
     this.tasks = new Rx.ReplaySubject(1);
     this.error = new Rx.ReplaySubject(1);
     
@@ -42,10 +40,7 @@ export class TasksStore {
   
   getTasks() {
     this.tasksService.getTasks()
-      .then(tasks => {
-        this._tasks = fromJS(tasks);
-        this.tasks.onNext(this._tasks.toJS());
-      })
+      .then(tasks => this.tasks.onNext(fromJS(tasks).toJS()))
       .then(null, error => this.error.onNext(error));
   }
 }
