@@ -13,8 +13,8 @@ export class TasksService {
   }
   
   getTasks() {
-    // this.taskPromise = this.taskPromise || 
-   return this.serverService.get('/api/v1/tasks');
-    // return this.taskPromise;
+    this.taskPromise = this.taskPromise || 
+      this.serverService.get('/api/v1/tasks');
+    return this.taskPromise;
   }
 }

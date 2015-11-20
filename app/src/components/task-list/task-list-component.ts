@@ -3,9 +3,9 @@ import {TaskActions} from '../../actions';
 
 export class TaskListComponent {
 
-  private username: string;
-  private error: string;
-  private tasks;
+  username: string;
+  error: string;
+  tasks;
   
   static selector = 'ngcTasks';
 
@@ -20,19 +20,19 @@ export class TaskListComponent {
     }
   });
 
-  static $inject = ['$log', 'tasksStore', 'tasksAction'];
+  static $inject = ['$scope', 'tasksStore', 'tasksAction'];
 
   constructor(
-    private $log: ng.ILogService, 
+    private $scope: ng.IScope,
     private tasksStore: TasksStore,
     private tasksAction: TaskActions) {
 
-    tasksStore.tasksSubject.subscribe(
-      tasks => {
-        this.tasks = tasks;
-      },
+    let disposable = tasksStore.tasks.subscribe(
+      tasks => this.tasks = tasks,
       error => this.error = error
     );
+    
+    $scope.$on('$destroy', () => disposable.dispose());
   }
   
   getTasks() {
