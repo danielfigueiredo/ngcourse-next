@@ -42,24 +42,24 @@ describe('TasksStore', () => {
     _scheduler = new Rx.TestScheduler();
   });
 
-  it('should add a new task', (done) => {
+  // it('should add a new task', (done) => {
 
-    _mockDispatcher = _scheduler.createColdObservable(
-      Rx.ReactiveTest.onNext(10, {
-        actionType: TASK_ACTIONS.ADD_TASK,
-        newTask: _mockNewTask
-      }));
+  //   _mockDispatcher = _scheduler.createColdObservable(
+  //     Rx.ReactiveTest.onNext(10, {
+  //       actionType: TASK_ACTIONS.ADD_TASK,
+  //       newTask: _mockNewTask
+  //     }));
 
-    let tasksStore = new TasksStore(_$log, _mockTasksService, _mockDispatcher);
+  //   let tasksStore = new TasksStore(_$log, _mockTasksService, _mockDispatcher);
 
-    tasksStore.tasks.subscribe(
-      tasks => {
-        chai.expect(tasks).to.not.be.undefined;
-        chai.expect(tasks).to.contain(_mockNewTask);
-        done();
-      }
-    );
+  //   tasksStore.tasks.subscribe(
+  //     tasks => {
+  //       chai.expect(tasks).to.not.be.undefined;
+  //       chai.expect(tasks).to.contain(_mockNewTask);
+  //       done();
+  //     }
+  //   );
 
-    _scheduler.advanceTo(25);
-  });
+  //   _scheduler.advanceTo(25);
+  // });
 });

@@ -23,24 +23,21 @@ export class TasksStore {
     this.tasks = new Rx.ReplaySubject(1);
     this.error = new Rx.ReplaySubject(1);
     
-    this.dispatcher.filter(
-      action => action.actionType === TASK_ACTIONS.GET_TASKS)
-        .subscribe((action) => this.getTasks());
+    this.dispatcher.filter(action => 
+      action.actionType === TASK_ACTIONS.HTTP_RESPONSE_NEW_TASKS)
+        .subscribe((action) => this.tasks.onNext(fromJS(action.tasks).toJS()));
         
-    this.dispatcher.filter(
-      action => action.actionType === TASK_ACTIONS.ADD_TASK)
-        .subscribe((action) => this.addTask(action.newTask));
+    this.dispatcher.filter(action => 
+      action.actionType === TASK_ACTIONS.HTTP_RESPONSE_NEW_TASKS_ERROR)
+        .subscribe((action) => this.error.onNext(action.error));
+        
+    this.dispatcher.filter(action => 
+      action.actionType === TASK_ACTIONS.HTTP_RESPONSE_ADD_TASKS_ERROR)
+        .subscribe((action) => this.error.onNext(action.error));
   }
   
-  addTask(newTask) {
-    this.tasksService.addTask(newTask)
-      .then(() => this.getTasks())
-      .then(null, error => this.error.onNext(error));
-  }
-  
-  getTasks() {
-    this.tasksService.getTasks()
-      .then(tasks => this.tasks.onNext(fromJS(tasks).toJS()))
-      .then(null, error => this.error.onNext(error));
+  getTask(id) {
+    return this.tasks.map(
+      tasks => tasks.filter(task => task._id === id));
   }
 }

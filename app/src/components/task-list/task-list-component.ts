@@ -31,6 +31,8 @@ export class TaskListComponent {
       tasks => this.tasks = tasks,
       error => this.error = error
     );
+
+    this.tasksAction.getTasks();
     
     $scope.$on('$destroy', () => disposable.dispose());
   }
