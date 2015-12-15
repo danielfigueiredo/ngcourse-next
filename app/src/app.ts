@@ -9,6 +9,8 @@ import '../css/styles.css';
 import * as angular from 'angular';
 import * as Rx from 'rx';
 
+import {UpgradeAdapter} from 'angular2/upgrade';
+
 import {
   ServerService, 
   RouterService, 
@@ -36,6 +38,7 @@ import {
   AuthenticationActions
 } from './actions';
 
+let adapter = new UpgradeAdapter();
 
 angular.module('ngcourse.router', ['ui.router'])
   .config(RouterConfig)
@@ -99,6 +102,4 @@ angular.module('ngcourse', [
     });
   });
 
-angular.element(document).ready(function() {
-  angular.bootstrap(document, ['ngcourse']);
-});
+adapter.bootstrap(document.body, ['ngcourse']);
