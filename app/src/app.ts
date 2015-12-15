@@ -1,6 +1,7 @@
 import 'angular-ui-router';
 import 'lodash-compat';
 import 'koast-angular';
+import 'reflect-metadata';
 
 import 'basscss/css/basscss.css';
 import 'font-awesome/css/font-awesome.css';
@@ -59,7 +60,7 @@ angular.module('ngcourse.tasks', [])
     TaskListComponent.directiveFactory)
   .directive(
     TaskComponent.selector,
-    TaskComponent.directiveFactory)
+      <ng.IDirectiveFactory> adapter.downgradeNg2Component(TaskComponent))
   .directive(
     TaskAddComponent.selector,
     TaskAddComponent.directiveFactory)
@@ -101,5 +102,8 @@ angular.module('ngcourse', [
       useEnvelope: true
     });
   });
+
+adapter.upgradeNg1Provider('router');
+adapter.addProvider(TaskComponent);
 
 adapter.bootstrap(document.body, ['ngcourse']);
