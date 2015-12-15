@@ -60,13 +60,13 @@ angular.module('ngcourse.tasks', [])
     TaskListComponent.directiveFactory)
   .directive(
     TaskComponent.selector,
-      <ng.IDirectiveFactory> adapter.downgradeNg2Component(TaskComponent))
+    <ng.IDirectiveFactory> adapter.downgradeNg2Component(TaskComponent))
   .directive(
     TaskAddComponent.selector,
     TaskAddComponent.directiveFactory)
   .directive(
     TaskEditComponent.selector,
-    TaskEditComponent.directiveFactory);
+    <ng.IDirectiveFactory> adapter.downgradeNg2Component(TaskEditComponent));
 
 angular.module('ngcourse.users', [])
   .service('usersStore', UsersStore)
@@ -104,6 +104,8 @@ angular.module('ngcourse', [
   });
 
 adapter.upgradeNg1Provider('router');
-adapter.addProvider(TaskComponent);
+adapter.upgradeNg1Provider('$stateParams');
+adapter.upgradeNg1Provider('tasksActions');
+adapter.upgradeNg1Provider('tasksStore');
 
 adapter.bootstrap(document.body, ['ngcourse']);
