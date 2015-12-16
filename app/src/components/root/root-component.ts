@@ -1,4 +1,6 @@
 import {Component} from 'ng-forward';
+import {TaskActions} from "../../actions/task/task-actions";
+import {TasksStore} from "../../stores/tasks/tasks-store";
 
 @Component({
   selector: RootComponent.SELECTOR,
