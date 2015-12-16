@@ -1,6 +1,7 @@
 import 'angular-ui-router';
 import 'lodash-compat';
 import 'koast-angular';
+import 'reflect-metadata';
 
 import 'basscss/css/basscss.css';
 import 'font-awesome/css/font-awesome.css';
@@ -8,6 +9,8 @@ import '../css/styles.css';
 
 import * as angular from 'angular';
 import * as Rx from 'rx';
+
+import {bundle, bootstrap} from 'ng-forward';
 
 import {
   ServerService, 
@@ -27,7 +30,8 @@ import {
   TaskComponent,
   TaskAddComponent,
   TaskEditComponent,
-  MainComponent
+  MainComponent,
+  RootComponent
 } from './components';
 
 import {
@@ -36,6 +40,7 @@ import {
   AuthenticationActions
 } from './actions';
 
+bundle('ngcourse.new', TaskComponent);
 
 angular.module('ngcourse.router', ['ui.router'])
   .config(RouterConfig)
@@ -48,15 +53,12 @@ angular.module('ngcourse.authentication', [])
   LoginFormComponent.selector,
   LoginFormComponent.directiveFactory);
 
-angular.module('ngcourse.tasks', [])
+angular.module('ngcourse.tasks', ['ngcourse.new'])
   .service('tasksStore', TasksStore)
   .service('tasksActions', TaskActions)
   .directive(
     TaskListComponent.selector,
     TaskListComponent.directiveFactory)
-  .directive(
-    TaskComponent.selector,
-    TaskComponent.directiveFactory)
   .directive(
     TaskAddComponent.selector,
     TaskAddComponent.directiveFactory)
@@ -99,6 +101,4 @@ angular.module('ngcourse', [
     });
   });
 
-angular.element(document).ready(function() {
-  angular.bootstrap(document, ['ngcourse']);
-});
+bootstrap(RootComponent, ['ngcourse']);
