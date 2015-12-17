@@ -31,7 +31,7 @@ import {Component, Input, Inject} from 'ng-forward';
     </div>
   `
 })
-@Inject('$scope', TaskActions, TasksStore, '$stateParams', 'router')
+@Inject('$scope', TaskActions, TasksStore, '$stateParams', RouterService)
 export class TaskEditComponent {
 
   static SELECTOR = 'ngc-task-edit';

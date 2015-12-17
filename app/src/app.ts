@@ -61,8 +61,7 @@ bundle('ngcourse.users', [
   UserActions, UsersStore
 ]);
 
-angular.module('ngcourse.server', [])
-  .service('server', ServerService);
+bundle('ngcourse.server', [ServerService]);
 
 bundle('ngcourse.dispatcher', [DispatcherService]);
 

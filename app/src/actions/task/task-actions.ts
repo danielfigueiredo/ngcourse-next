@@ -1,8 +1,9 @@
 import {TASK_ACTIONS} from '../action-constants';
 import { Injectable, Inject } from 'ng-forward';
+import {DispatcherService} from '../../services/dispatcher/dispatcher-service';
 
 @Injectable('tasksActions')
-@Inject('dispatcher')
+@Inject(DispatcherService)
 export class TaskActions {
 
   constructor(
