@@ -3,9 +3,9 @@ import {UsersStore} from '../../stores/users/users-store';
 import {RouterService} from '../../services/router/router-service';
 import {AuthenticationStore}
 from '../../stores/authentication/authentication-store';
-import {Component, Inject} from 'ng-forward';
 import {TaskActions} from '../../actions/task/task-actions';
-import {TaskComponent} from "../task/task-component";
+import {TaskComponent} from '../task/task-component';
+import {Component, Inject} from 'ng-forward';
 
 @Component({
   selector: TaskListComponent.SELECTOR,

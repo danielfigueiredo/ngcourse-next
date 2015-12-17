@@ -1,6 +1,5 @@
 import {Component, StateConfig} from 'ng-forward';
-import {TaskActions} from "../../actions/task/task-actions";
-import {TasksStore} from "../../stores/tasks/tasks-store";
+import {MainComponent} from '../main/main-component';
 
 @Component({
   selector: RootComponent.SELECTOR,
@@ -10,16 +9,9 @@ import {TasksStore} from "../../stores/tasks/tasks-store";
         <main class="container mt4"><ng-outlet></ng-outlet></main>
       </ngc-main>
     </div>
-  `
+  `,
+  directives: [MainComponent]
 })
-//@StateConfig([
-//  { name: 'tasks', url: '/tasks', component: ''},
-//  { name: '', url: '', component: ''},
-//  { name: '', url: '', component: ''},
-//  { name: '', url: '', component: ''},
-//  { name: '', url: '', component: ''},
-//  { name: '', url: '', component: ''}
-//])
 export class RootComponent {
 
   static SELECTOR = 'root';

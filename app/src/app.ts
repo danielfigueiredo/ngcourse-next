@@ -15,7 +15,8 @@ import {bundle, bootstrap} from 'ng-forward';
 import {
   ServerService, 
   RouterService, 
-  RouterConfig
+  RouterConfig,
+  DispatcherService
 } from './services';
 
 import {
@@ -63,8 +64,7 @@ bundle('ngcourse.users', [
 angular.module('ngcourse.server', [])
   .service('server', ServerService);
 
-angular.module('ngcourse.dispatcher', [])
-  .service('dispatcher', Rx.Subject);
+bundle('ngcourse.dispatcher', [DispatcherService]);
 
 angular.module('ngcourse', [
   'ngcourse.authentication',
@@ -74,9 +74,6 @@ angular.module('ngcourse', [
   'ngcourse.router',
   'ngcourse.dispatcher',
   'koast'])
-  .directive(
-    MainComponent.selector,
-    MainComponent.directiveFactory)
   .constant('API_BASE_URL', 'http://ngcourse.herokuapp.com')
   .run((koast, API_BASE_URL) => {
     koast.init({
