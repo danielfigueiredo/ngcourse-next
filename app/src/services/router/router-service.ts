@@ -1,4 +1,5 @@
 import {TaskListComponent} from '../../components/index';
+import {Injectable, Inject} from 'ng-forward';
 
 export class RouterConfig {
 
@@ -56,9 +57,9 @@ export class RouterConfig {
   }
 }
 
+@Injectable('router')
+@Inject('$state')
 export class RouterService {
-
-  static $inject = ['$state'];
 
   constructor(private $state: angular.ui.IStateService) { }
 

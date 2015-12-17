@@ -40,32 +40,34 @@ import {
   AuthenticationActions
 } from './actions';
 
-bundle('ngcourse.new.tasks', [
-  TaskComponent, TaskEditComponent, TaskActions, TasksStore
+bundle('ngcourse.new.router', [
+  RouterService
 ]);
 
-angular.module('ngcourse.router', ['ui.router'])
-  .config(RouterConfig)
-  .service('router', RouterService);
+angular.module('ngcourse.router', ['ui.router', 'ngcourse.new.router'])
+  .config(RouterConfig);
 
-angular.module('ngcourse.authentication', [])
-  .service('authenticationStore', AuthenticationStore)
-  .service('authenticationActions', AuthenticationActions)
+bundle('ngcourse.new.authentication', [
+  AuthenticationStore, AuthenticationActions
+]);
+
+angular.module('ngcourse.authentication', ['ngcourse.new.authentication'])
   .directive(
-  LoginFormComponent.selector,
-  LoginFormComponent.directiveFactory);
+    LoginFormComponent.selector,
+    LoginFormComponent.directiveFactory);
+
+bundle('ngcourse.new.tasks', [
+  TaskComponent, TaskEditComponent, TaskActions, TasksStore, TaskListComponent
+]);
 
 angular.module('ngcourse.tasks', ['ngcourse.new.tasks'])
-  .directive(
-    TaskListComponent.selector,
-    TaskListComponent.directiveFactory)
   .directive(
     TaskAddComponent.selector,
     TaskAddComponent.directiveFactory);
 
-angular.module('ngcourse.users', [])
-  .service('usersStore', UsersStore)
-  .service('usersActions', UserActions);
+bundle('ngcourse.users', [
+  UserActions, UsersStore
+]);
 
 angular.module('ngcourse.server', [])
   .service('server', ServerService);

@@ -3,8 +3,35 @@ import {UsersStore} from '../../stores/users/users-store';
 import {RouterService} from '../../services/router/router-service';
 import {AuthenticationStore}
 from '../../stores/authentication/authentication-store';
+import {Component, Inject} from 'ng-forward';
 import {TaskActions} from '../../actions/task/task-actions';
+import {TaskComponent} from "../task/task-component";
 
+@Component({
+  selector: TaskListComponent.SELECTOR,
+  template: `
+    <div>
+      <header class="flex mb4 header">
+        <i class="h1 fa fa-bullseye fa-5x mr2 blue"></i>
+        <div class="flex-auto">
+          <h3 id="qa-display-name"
+            class="mb0 mt1 caps">
+            {{ctrl.displayName}}
+          </h3>
+          <p class="h1 mb0">We've Got {{ctrl.tasks.length}} Tasks</p>
+        </div>
+      </header>
+      <div class="mt4 mb4" ui-view="actionArea"></div>
+      <div class="md-col-8 mx-auto rounded tasks-list mb4">
+        <ngc-task ng-repeat="task in ctrl.tasks"
+          [task]="task"
+          [user]="ctrl.users[task.owner]">
+        </ngc-task>
+      </div>
+    </div>
+  `
+})
+@Inject('$scope', RouterService, AuthenticationStore, TasksStore, UsersStore)
 export class TaskListComponent {
 
   private _tasks: any[];
@@ -13,16 +40,7 @@ export class TaskListComponent {
   private _displayName: String;
   private _errorMessage: String;
 
-  static selector = 'ngcTasks';
-
-  static directiveFactory: ng.IDirectiveFactory = () => ({
-    restrict: 'E',
-    controllerAs: 'ctrl',
-    scope: {},
-    bindToController: true,
-    controller: TaskListComponent,
-    template: require('./task-list-component.html')
-  });
+  static SELECTOR = 'ngc-tasks';
 
   static $inject = [
     '$scope',
