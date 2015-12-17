@@ -4,6 +4,8 @@ import {UsersStore} from '../../stores/users/users-store';
 import {AuthenticationActions}
 from '../../actions/authentication/authentication-actions';
 import {Component, Inject} from 'ng-forward';
+import {TaskListComponent} from '../task-list/task-list-component';
+import {LoginFormComponent} from '../login-form/login-form-component';
 
 @Component({
   selector : MainComponent.SELECTOR,
@@ -43,7 +45,8 @@ import {Component, Inject} from 'ng-forward';
       ng-show="ctrl.user.isAuthenticated"
       ng-transclude>
     </div>
-  `
+  `,
+  directives: [TaskListComponent, LoginFormComponent]
 })
 @Inject('$scope', AuthenticationStore, AuthenticationActions, UsersStore)
 export class MainComponent {

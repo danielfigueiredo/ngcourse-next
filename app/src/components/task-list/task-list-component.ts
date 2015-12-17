@@ -5,7 +5,9 @@ import {AuthenticationStore}
 from '../../stores/authentication/authentication-store';
 import {TaskActions} from '../../actions/task/task-actions';
 import {TaskComponent} from '../task/task-component';
-import {Component, Inject} from 'ng-forward';
+import {TaskAddComponent} from '../task-add/task-add-component';
+import {TaskEditComponent} from '../task-edit/task-edit-component';
+import {Component, Inject, StateConfig} from 'ng-forward';
 
 @Component({
   selector: TaskListComponent.SELECTOR,
@@ -21,7 +23,9 @@ import {Component, Inject} from 'ng-forward';
           <p class="h1 mb0">We've Got {{ctrl.tasks.length}} Tasks</p>
         </div>
       </header>
-      <div class="mt4 mb4" ui-view="actionArea"></div>
+      <div class="mt4 mb4">
+        <ng-outlet></ng-outlet>
+      </div>
       <div class="md-col-8 mx-auto rounded tasks-list mb4">
         <ngc-task ng-repeat="task in ctrl.tasks"
           [task]="task"
@@ -29,9 +33,14 @@ import {Component, Inject} from 'ng-forward';
         </ngc-task>
       </div>
     </div>
-  `
+  `,
+  directives: [TaskComponent, TaskAddComponent, TaskEditComponent]
 })
-@Inject('$scope', RouterService, AuthenticationStore, TasksStore, UsersStore)
+@StateConfig([
+  { url: '/add', component: TaskAddComponent, name: 'tasks.add' },
+  { url: '/:id', component: TaskEditComponent, name: 'tasks.details' }
+])
+@Inject('$scope', AuthenticationStore, TasksStore, UsersStore)
 export class TaskListComponent {
 
   private _tasks: any[];
@@ -42,22 +51,12 @@ export class TaskListComponent {
 
   static SELECTOR = 'ngc-tasks';
 
-  static $inject = [
-    '$scope',
-    'router',
-    'authenticationStore',
-    'tasksStore',
-    'usersStore'
-  ];
-
   constructor(
     private $scope: ng.IScope,
-    private router: RouterService,
     private authenticationStore: AuthenticationStore,
     private tasksStore: TasksStore,
     private usersStore: UsersStore
   ) {
-
     let authSubscription = this.authenticationStore.userSubject.subscribe(
       user => this._user = user,
       error => this._errorMessage = error);

@@ -41,25 +41,20 @@ import {
   AuthenticationActions
 } from './actions';
 
-bundle('ngcourse.new.router', [
+bundle('ngcourse.router', [
   RouterService
 ]);
 
-angular.module('ngcourse.router', ['ui.router', 'ngcourse.new.router'])
+angular.module('ngcourse.router.config', ['ui.router'])
   .config(RouterConfig);
 
 bundle('ngcourse.authentication', [
-  AuthenticationStore, AuthenticationActions, LoginFormComponent
+  AuthenticationStore, AuthenticationActions
 ]);
 
-bundle('ngcourse.tasks', [
-  TaskComponent, TaskEditComponent, TaskActions,
-  TasksStore, TaskListComponent, TaskAddComponent
-]);
+bundle('ngcourse.tasks', [TaskActions,  TasksStore]);
 
-bundle('ngcourse.users', [
-  UserActions, UsersStore
-]);
+bundle('ngcourse.users', [UserActions, UsersStore]);
 
 bundle('ngcourse.server', [ServerService]);
 

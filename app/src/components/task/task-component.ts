@@ -20,7 +20,7 @@ import {Component, Input} from 'ng-forward';
 
       <div class="px2">
         <a ng-show="ctrl.task.can.edit"
-          ui-sref="tasks.details({_id: ctrl.task._id})">
+          ui-sref="tasks.details({id: ctrl.task._id})">
           <i class="fa fa-pencil-square p1 gray"></i>
         </a>
       <div>

@@ -38,6 +38,7 @@ export class TaskEditComponent {
 
   private _task: any;
   private _errorMessage: String;
+  id: String;
   
   constructor(
     private $scope: angular.IScope,
@@ -46,10 +47,10 @@ export class TaskEditComponent {
     private $stateParams,
     private router: RouterService
   ) {
-    let tasksSubscription = 
+    let tasksSubscription =
       this.tasksStore.tasksSubject.subscribe(
         tasks => 
-          this._task = this.tasksStore.getTaskById(this.$stateParams._id),
+          this._task = this.tasksStore.getTaskById(this.$stateParams.id),
         error => this._errorMessage = error);
       
     this.$scope.$on('$destroy', () => {
