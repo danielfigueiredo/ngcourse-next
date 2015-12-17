@@ -1,7 +1,7 @@
 <ngc-login-form
   ng-hide="ctrl.user.isAuthenticated"
-  on-submit="ctrl.login(data)"
-  error-message="ctrl.errorMessage">
+  (on-submit)="ctrl.login(data)"
+  [error-message]="ctrl.errorMessage">
 </ngc-login-form>
 
 <div class="clearfix white bg-blue"

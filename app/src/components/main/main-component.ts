@@ -54,6 +54,7 @@ export class MainComponent {
   }
 
   private login(form) {
+    console.log(form);
     this.authenticationActions.login(form);
   }
 

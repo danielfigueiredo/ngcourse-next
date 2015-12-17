@@ -47,14 +47,9 @@ bundle('ngcourse.new.router', [
 angular.module('ngcourse.router', ['ui.router', 'ngcourse.new.router'])
   .config(RouterConfig);
 
-bundle('ngcourse.new.authentication', [
-  AuthenticationStore, AuthenticationActions
+bundle('ngcourse.authentication', [
+  AuthenticationStore, AuthenticationActions, LoginFormComponent
 ]);
-
-angular.module('ngcourse.authentication', ['ngcourse.new.authentication'])
-  .directive(
-    LoginFormComponent.selector,
-    LoginFormComponent.directiveFactory);
 
 bundle('ngcourse.tasks', [
   TaskComponent, TaskEditComponent, TaskActions,

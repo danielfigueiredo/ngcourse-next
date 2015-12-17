@@ -33,7 +33,7 @@ import {Component, Inject} from 'ng-forward';
 @Inject(RouterService, TaskActions)
 export class TaskAddComponent {
 
-  static SELECTOR = 'ngcTaskAdd';
+  static SELECTOR = 'ngc-task-add';
   
   constructor(
     private router: RouterService,
