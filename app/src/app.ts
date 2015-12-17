@@ -56,14 +56,10 @@ angular.module('ngcourse.authentication', ['ngcourse.new.authentication'])
     LoginFormComponent.selector,
     LoginFormComponent.directiveFactory);
 
-bundle('ngcourse.new.tasks', [
-  TaskComponent, TaskEditComponent, TaskActions, TasksStore, TaskListComponent
+bundle('ngcourse.tasks', [
+  TaskComponent, TaskEditComponent, TaskActions,
+  TasksStore, TaskListComponent, TaskAddComponent
 ]);
-
-angular.module('ngcourse.tasks', ['ngcourse.new.tasks'])
-  .directive(
-    TaskAddComponent.selector,
-    TaskAddComponent.directiveFactory);
 
 bundle('ngcourse.users', [
   UserActions, UsersStore
