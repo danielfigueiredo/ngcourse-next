@@ -10,7 +10,8 @@ import '../css/styles.css';
 import * as angular from 'angular';
 import * as Rx from 'rx';
 
-import {bundle, bootstrap} from 'ng-forward';
+import {bundle} from 'ng-forward';
+import {UpgradeAdapter} from 'angular2/upgrade';
 
 import {
   ServerService, 
@@ -60,6 +61,8 @@ bundle('ngcourse.server', [ServerService]);
 
 bundle('ngcourse.dispatcher', [DispatcherService]);
 
+bundle('ngcourse.component', [RootComponent]);
+
 angular.module('ngcourse', [
   'ngcourse.authentication',
   'ngcourse.tasks',
@@ -67,6 +70,7 @@ angular.module('ngcourse', [
   'ngcourse.server',
   'ngcourse.router',
   'ngcourse.dispatcher',
+  'ngcourse.component',
   'koast'])
   .constant('API_BASE_URL', 'http://ngcourse.herokuapp.com')
   .run((koast, API_BASE_URL) => {
@@ -82,4 +86,6 @@ angular.module('ngcourse', [
     });
   });
 
-bootstrap(RootComponent, ['ngcourse']);
+let adapter = new UpgradeAdapter();
+
+adapter.bootstrap(document.body, ['ngcourse']);
