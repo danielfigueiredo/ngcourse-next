@@ -8,5 +8,13 @@ import {bootstrap} from 'angular2/platform/browser';
 import {ROUTER_PROVIDERS} from 'angular2/router';
 
 import {AppComponent} from './components/app/app-component';
+import configureStore from './stores/configure-store';
 
-bootstrap(AppComponent, [ROUTER_PROVIDERS]);
+const provider = require('ng2-redux').provider;
+const store = configureStore();
+
+
+bootstrap(AppComponent, [
+  ROUTER_PROVIDERS,
+  provider(store)
+]);

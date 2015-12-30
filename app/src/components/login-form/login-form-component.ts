@@ -1,7 +1,11 @@
-import {Component, Input, Output, EventEmitter} from 'angular2/core';
+import {Component, Input, Output, EventEmitter, Inject, OnDestroy}
+    from 'angular2/core';
 import {NgIf, FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators, Control}
     from 'angular2/common';
 import {LoginCredentials} from './login';
+import {bindActionCreators} from 'redux';
+import * as LoginActions from '../../actions/login-actions';
+
 
 let componentDirectives = [
   FORM_DIRECTIVES, NgIf
@@ -16,9 +20,9 @@ let componentDirectives = [
         [ngFormModel]="loginForm"
         (submit)="doLogin()"
         novalidate>
-
+        {{test}}
         <h1 class="mt0 mb3 center">
-          <i class="h1 fa fa-bullseye fa-lg blue"></i> ngCourse App
+          <i class="h1 fa fa-bullseye fa-lg blue"></i> ng2Course App
         </h1>
 
         <div class="bold center p2 mb2 white bg-red rounded"
@@ -33,6 +37,7 @@ let componentDirectives = [
           type="text"
           ngControl="username"
           name="username"
+          #username
           required>
         <label>Password</label>
         <input
@@ -54,15 +59,18 @@ let componentDirectives = [
   `,
   directives: componentDirectives
 })
-export class LoginFormComponent {
+export class LoginFormComponent implements OnDestroy {
 
   static SELECTOR = 'ngc-login-form';
 
+  private unsubscribe: Function;
+
   @Input() errorMessage: String;
-  @Output() onSubmit: EventEmitter<LoginCredentials> = new EventEmitter();
+  @Output() onSubmit: EventEmitter<any> = new EventEmitter();
   loginForm : ControlGroup;
 
-  constructor(formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,
+              @Inject('ngRedux') private ngRedux) {
     this.loginForm = formBuilder.group({
       username: ['', Validators.compose([Validators.required, LoginFormComponent.usernameValidator])],
       password: ['', Validators.required]
@@ -77,11 +85,23 @@ export class LoginFormComponent {
     return null;
   }
 
-  doLogin() {
-    let loginCredentials: LoginCredentials = {
-      username: this.loginForm.value.username,
-      password: this.loginForm.value.password
-    };
-    this.onSubmit.emit(loginCredentials);
+  //ngOnDestroy(): any {
+  //  console.log('unsubscribinh');
+  //  this.unsubscribe();
+  //}
+
+  mapStateToThis(state) {
+    if (state.loginReducer.isAuthenticated) {
+      this.onSubmit.emit(null);
+    }
   }
+
+  mapDispatchToThis(dispatch) {
+    return bindActionCreators(LoginActions, dispatch);
+  }
+
+  doLogin() {
+    this.onSubmit.next(null);
+  }
+
 }

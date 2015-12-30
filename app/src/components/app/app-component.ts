@@ -60,7 +60,7 @@ export class AppComponent {
     };
   }
 
-  login(loginCredentials: LoginCredentials) {
+  login() {
     this._user = this.createUser();
   }
 
