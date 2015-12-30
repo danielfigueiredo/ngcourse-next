@@ -1,5 +1,8 @@
-import {Component, Input, Output, EventEmitter} from 'angular2/core';
+import {Component, Input, Output, EventEmitter, Inject, OnDestroy}
+    from 'angular2/core';
 import {ROUTER_DIRECTIVES} from 'angular2/router';
+import {doLogout} from '../../actions/login-actions';
+import {bindActionCreators} from 'redux';
 
 let componentDirectives = [
   ROUTER_DIRECTIVES
@@ -29,7 +32,7 @@ let componentDirectives = [
         </a>
         <a id="qa-logout-link"
           class="btn py2 m0"
-          (click)="logout()">
+          (click)="actions.doLogout()">
           Logout
         </a>
       </div>
@@ -37,14 +40,28 @@ let componentDirectives = [
   `,
   directives: componentDirectives
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnDestroy {
 
   static SELECTOR = 'ngc-navbar';
 
   @Input() user: any;
-  @Output() onLogout : EventEmitter<any> = new EventEmitter();
+  private unsubscribe: any;
 
-  logout() {
-    this.onLogout.emit('doLogout');
+  constructor(@Inject('ngRedux') ngRedux) {
+    this.unsubscribe = ngRedux.connect(
+      null,
+      this.mapDispatchToThis
+    )(this);
   }
+
+  ngOnDestroy(): any {
+    this.unsubscribe();
+  }
+
+  mapDispatchToThis(dispatch) {
+    return {
+      actions: bindActionCreators({doLogout}, dispatch)
+    };
+  }
+
 }

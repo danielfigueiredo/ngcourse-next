@@ -4,7 +4,7 @@ import {NgIf, FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators, Control}
     from 'angular2/common';
 import {LoginCredentials} from './login';
 import {bindActionCreators} from 'redux';
-import * as LoginActions from '../../actions/login-actions';
+import {doLogin} from '../../actions/login-actions';
 
 
 let componentDirectives = [
@@ -18,9 +18,11 @@ let componentDirectives = [
 
       <form class="mx-auto sm-col-6"
         [ngFormModel]="loginForm"
-        (submit)="doLogin()"
+        (submit)="actions.doLogin({
+          username: username.value,
+          password: password.value
+        })"
         novalidate>
-        {{test}}
         <h1 class="mt0 mb3 center">
           <i class="h1 fa fa-bullseye fa-lg blue"></i> ng2Course App
         </h1>
@@ -46,6 +48,7 @@ let componentDirectives = [
           type="password"
           ngControl="password"
           name="password"
+          #password
           required>
 
         <button class="btn btn-primary block col-12 mt2"
@@ -66,15 +69,21 @@ export class LoginFormComponent implements OnDestroy {
   private unsubscribe: Function;
 
   @Input() errorMessage: String;
-  @Output() onSubmit: EventEmitter<any> = new EventEmitter();
   loginForm : ControlGroup;
 
   constructor(private formBuilder: FormBuilder,
               @Inject('ngRedux') private ngRedux) {
+    let validators = Validators.compose([
+      Validators.required, LoginFormComponent.usernameValidator
+    ]);
     this.loginForm = formBuilder.group({
-      username: ['', Validators.compose([Validators.required, LoginFormComponent.usernameValidator])],
+      username: ['', validators],
       password: ['', Validators.required]
     });
+    this.unsubscribe = ngRedux.connect(
+        null,
+        this.mapDispatchToThis
+    )(this);
   }
 
   static usernameValidator(control: Control) {
@@ -85,23 +94,14 @@ export class LoginFormComponent implements OnDestroy {
     return null;
   }
 
-  //ngOnDestroy(): any {
-  //  console.log('unsubscribinh');
-  //  this.unsubscribe();
-  //}
-
-  mapStateToThis(state) {
-    if (state.loginReducer.isAuthenticated) {
-      this.onSubmit.emit(null);
-    }
+  ngOnDestroy(): any {
+    this.unsubscribe();
   }
 
   mapDispatchToThis(dispatch) {
-    return bindActionCreators(LoginActions, dispatch);
-  }
-
-  doLogin() {
-    this.onSubmit.next(null);
+    return {
+      actions: bindActionCreators({doLogin}, dispatch)
+    };
   }
 
 }

@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component, Inject, OnDestroy} from 'angular2/core';
 import {NgIf} from 'angular2/common';
 import {RouteConfig, ROUTER_DIRECTIVES, Router} from 'angular2/router';
 import {LoginFormComponent} from '../login-form/login-form-component';
@@ -16,14 +16,12 @@ let componentDirectives = [
   selector : AppComponent.SELECTOR,
   template : `
     <ngc-login-form
-      *ngIf="!user.isAuthenticated"
-      (onSubmit)="login($event)">
+      *ngIf="!user.isAuthenticated">
     </ngc-login-form>
 
     <span [hidden]="!user.isAuthenticated">
 
-      <ngc-navbar (onLogout)="logout($event)"
-        [user]="user">
+      <ngc-navbar [user]="user">
       </ngc-navbar>
 
       <div class="px2">
@@ -41,35 +39,28 @@ let componentDirectives = [
   { path: '/tasks/...', component: TaskOutletComponent, name: 'Tasks', useAsDefault: true },
   { path: '/account', component: AccountComponent, name: 'Account'}
 ])
-export class AppComponent {
+export class AppComponent implements OnDestroy {
 
   static SELECTOR = 'ngc-app';
 
-  private _user: any;
+  private unsubscribe: any;
 
   constructor(
-      private _router: Router) {
-    this._user = this.createUser();
-    this._user.isAuthenticated = false;
+      private _router: Router,
+      @Inject('ngRedux') ngRedux) {
+    this.unsubscribe = ngRedux.connect(
+        this.mapStateToThis,
+        null
+    )(this);
   }
 
-  private createUser() {
+  ngOnDestroy(): any {
+    this.unsubscribe();
+  }
+
+  mapStateToThis(state) {
     return {
-      isAuthenticated: true,
-      displayName: 'Alice Bleeblebrox'
-    };
+      user: state.loginReducer
+    }
   }
-
-  login() {
-    this._user = this.createUser();
-  }
-
-  logout($event) {
-    this._user.isAuthenticated = false;
-  }
-
-  get user() {
-    return this._user;
-  }
-
 }

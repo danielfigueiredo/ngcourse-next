@@ -7,3 +7,9 @@ export var doLogin = (loginObj) => {
     password: loginObj.password
   };
 }
+
+export var doLogout = () => {
+  return {
+    type: loginConstants.LOGOUT_USER
+  }
+};
