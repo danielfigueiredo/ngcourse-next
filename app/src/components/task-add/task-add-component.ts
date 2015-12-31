@@ -28,7 +28,8 @@ import {FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators}
           Save
         </button>
         <button class="btn btn-primary bg-gray"
-                (click)="cancel()">
+                (click)="cancel($event)"
+                formnovalidate>
           Cancel
         </button>
       </form>

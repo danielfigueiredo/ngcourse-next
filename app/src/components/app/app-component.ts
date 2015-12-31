@@ -60,7 +60,7 @@ export class AppComponent implements OnDestroy {
 
   mapStateToThis(state) {
     return {
-      user: state.loginReducer
+      user: state.user
     }
   }
 }
