@@ -1,7 +1,6 @@
 import {Component} from 'angular2/core';
 import {RouteParams, Router, RouteConfig} from 'angular2/router';
 import {TaskListComponent} from '../task-list/task-list-component';
-import {Task} from '../task/task';
 import {FormBuilder, ControlGroup, Control, Validators} from 'angular2/common';
 
 @Component({
@@ -61,7 +60,6 @@ export class TaskEditComponent {
   }
 
   updateTask() {
-    console.log(this.taskEditForm);
     this._router.navigate(['Tasks']);
   }
 

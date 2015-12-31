@@ -20,7 +20,6 @@ export var getUserTasks = () => {
       "__v": 0,
       "done": true
     }];
-    console.log(tasks.filter((task) => task.owner === username));
     dispatch({
       type: taskContants.GET_USER_TASKS,
       tasks: tasks.filter((task) => task.owner === username)

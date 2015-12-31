@@ -2,7 +2,6 @@ import {Component, Inject, OnDestroy} from 'angular2/core';
 import {NgFor} from 'angular2/common';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 import {TaskComponent} from '../task/task-component';
-import {Task} from '../task/task';
 import {bindActionCreators} from 'redux';
 import * as taskActions from '../../actions/task-actions';
 

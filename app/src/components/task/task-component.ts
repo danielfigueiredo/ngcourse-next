@@ -1,7 +1,6 @@
 import {Component, Input} from 'angular2/core';
 import {NgIf, NgClass}  from 'angular2/common';
 import {ROUTER_DIRECTIVES} from 'angular2/router';
-import {Task} from '../task/task';
 
 let componentDirectives = [
     ROUTER_DIRECTIVES, NgIf, NgClass
@@ -39,6 +38,6 @@ export class TaskComponent {
 
   static SELECTOR = 'ngc-task';
 
-  @Input() task : Task;
+  @Input() task : any;
   @Input() user : any;
 }
