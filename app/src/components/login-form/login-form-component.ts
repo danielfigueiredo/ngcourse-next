@@ -2,9 +2,8 @@ import {Component, Input, Output, EventEmitter, Inject, OnDestroy}
     from 'angular2/core';
 import {NgIf, FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators, Control}
     from 'angular2/common';
-import {LoginCredentials} from './login';
 import {bindActionCreators} from 'redux';
-import {doLogin} from '../../actions/login-actions';
+import {doLogin} from '../../actions/user-actions';
 
 
 let componentDirectives = [

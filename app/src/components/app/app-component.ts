@@ -5,7 +5,6 @@ import {LoginFormComponent} from '../login-form/login-form-component';
 import {TaskOutletComponent} from '../tasks-outlet/task-outlet-component';
 import {AccountComponent} from '../account/account-component';
 import {NavbarComponent} from '../navbar/navbar-component';
-import {LoginCredentials} from '../login-form/login';
 
 let componentDirectives = [
   NgIf, TaskOutletComponent, LoginFormComponent, ROUTER_DIRECTIVES,
@@ -19,7 +18,7 @@ let componentDirectives = [
       *ngIf="!user.isAuthenticated">
     </ngc-login-form>
 
-    <span [hidden]="!user.isAuthenticated">
+    <span *ngIf="user.isAuthenticated">
 
       <ngc-navbar [user]="user">
       </ngc-navbar>

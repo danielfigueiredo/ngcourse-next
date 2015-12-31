@@ -1,7 +1,7 @@
 import {Component, Input, Output, EventEmitter, Inject, OnDestroy}
     from 'angular2/core';
 import {ROUTER_DIRECTIVES} from 'angular2/router';
-import {doLogout} from '../../actions/login-actions';
+import {doLogout} from '../../actions/user-actions';
 import {bindActionCreators} from 'redux';
 
 let componentDirectives = [

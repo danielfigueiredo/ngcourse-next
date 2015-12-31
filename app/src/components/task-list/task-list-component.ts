@@ -1,8 +1,10 @@
-import {Component} from 'angular2/core';
+import {Component, Inject, OnDestroy} from 'angular2/core';
 import {NgFor} from 'angular2/common';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 import {TaskComponent} from '../task/task-component';
 import {Task} from '../task/task';
+import {bindActionCreators} from 'redux';
+import * as taskActions from '../../actions/task-actions';
 
 let componentDirectives = [
   NgFor, ROUTER_DIRECTIVES, TaskComponent
@@ -35,23 +37,28 @@ let componentDirectives = [
   `,
   directives: componentDirectives
 })
-export class TaskListComponent {
-
-  private _tasks: Task[];
-  private _user: any;
+export class TaskListComponent implements OnDestroy {
 
   static SELECTOR = 'ngc-tasks';
 
-  constructor() {
-    this._tasks = [{"_id":"5612912029j3e3032nz0kj6y","owner":"alice","description":"Do the loundry","__v":0}, {"_id":"561291202d77a30300awc64b","owner":"alice","description":"Clean the house","__v":0}, {"_id":"561291202d77a30300awc64b","owner":"alice","description":"Study","__v":0, "done":true}];
-    this._user = {"_id":"560ea7114e9f13f11adb1b51","username":"alice","password":"$2a$10$t4R1ndYMcEpT7.qZfPb2lO6rQXA0sNKFrm5S6Z0XH9cIptKg68Y3K","displayName":"Alice Beeblebrox","__v":0};
+  private unsubscribe;
+
+  constructor(@Inject('ngRedux') ngRedux) {
+    this.unsubscribe = ngRedux.connect(
+        this.mapStateToThis,
+        null
+    )(this);
+    ngRedux.dispatch(taskActions.getUserTasks());
   }
 
-  get tasks() {
-    return this._tasks;
+  ngOnDestroy(): any {
+    this.unsubscribe();
   }
 
-  get user() {
-    return this._user;
+  mapStateToThis(state) {
+    return {
+      tasks: state.task.userTasks,
+      user: state.user
+    }
   }
 }

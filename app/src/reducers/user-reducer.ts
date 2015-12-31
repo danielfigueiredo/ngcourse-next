@@ -10,6 +10,7 @@ function login (state, action): any {
       if (action.username === 'alice' && action.password === 'alice') {
         return {
           isAuthenticated: true,
+          username: 'alice',
           displayName: 'Alice Bleeblebrox'
         };
       }
